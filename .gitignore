@@ -1,0 +1,19 @@
+# Environment variables (SECRETS)
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+
+# Virtual environments
+venv/
+.venv/
+
+# Data / generated files
+dataset_results.csv
+
+# Logs
+*.log
