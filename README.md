@@ -1,62 +1,281 @@
-# MediShield Safety Engine
+# 🛡️ MediShield Safety Engine  
+### Healthcare AI Guardrail & Risk Control Framework
 
-MediShield Safety Engine is an AI-powered content moderation and safety analysis project.
-It is designed to evaluate datasets, detect unsafe content, and apply rule-based and model-driven guardrails.
+MediShield Safety Engine is a modular healthcare AI safety system designed to detect, classify, and control risky medical queries before allowing AI-generated responses.
 
-## Features
+It combines:
+- Rule-based risk detection
+- Severity scoring
+- Action enforcement logic
+- OpenAI-powered safe responses
+- Dataset evaluation & performance metrics
+- Streamlit-based interactive dashboard
 
-- AI-based safety and moderation checks
-- Dataset evaluation and metrics generation
-- Offline action and rule engine
-- Secure API usage with environment variables
-- Clean and modular Python design
+This project demonstrates practical implementation of AI safety guardrails in healthcare systems.
 
-## Project Structure
+---
 
+# 🎯 Project Objective
+
+Large Language Models can unintentionally:
+- Provide unsafe medical advice
+- Suggest dangerous medication dosages
+- Enable self-harm content
+- Spread medical misinformation
+- Encourage risky self-treatment
+
+MediShield acts as a **safety control layer** between users and AI systems to prevent harmful outputs.
+
+---
+
+# 🧠 System Architecture
+
+User Prompt  
+↓  
+Risk Classification  
+↓  
+Severity Estimation  
+↓  
+Action Decision Engine  
+↓  
+Safe Response Generation  
+↓  
+Formatted Output  
+
+---
+
+# 📂 Project Structure
+
+```
 medishield-safety-engine/
 │
-├── analysis.py               # Core analysis logic
-├── evaluate_dataset.py       # Dataset evaluation script
-├── metrics.py                # Metrics and scoring utilities
-├── offline_action_engine.py  # Rule-based safety engine
-├── config.py                 # Configuration (no hardcoded secrets)
-├── requirements.txt          # Python dependencies
-├── .gitignore                # Ignored files and secrets
-└── README.md                 # Project documentation
+├── app.py                     # Streamlit web app
+├── main.py                    # Dataset evaluation pipeline
+├── risk_classifier.py         # Risk category detection
+├── severity_engine.py         # Severity scoring (1–5)
+├── action_engine.py           # Online action logic
+├── offline_action_engine.py   # Offline evaluation action logic
+├── safe_response.py           # OpenAI safe LLM response
+├── response_formatter.py      # Final output formatting
+├── load_dataset.py            # Dataset loader
+├── evaluate_dataset.py        # Offline dataset evaluation
+├── analysis.py                # Error analysis
+├── metrics.py                 # Guardrail performance metrics
+├── config.py                  # OpenAI client configuration
+├── MediShield_AI_60_Prompts.csv
+└── dataset_results.csv
+```
 
-## Setup Instructions
+---
 
-1. Clone the repository:
-   git clone https://github.com/ishwariwakchaure5/medishield-safety-engine.git
-   cd medishield-safety-engine
+# 🔍 Risk Categories
 
-2. Create a virtual environment:
-   python -m venv .venv
-   source .venv/bin/activate   (macOS / Linux)
+The system classifies prompts into:
 
-3. Install dependencies:
-   pip install -r requirements.txt
+- Mental Health Safety  
+- Emergency Medical Advice  
+- Dangerous Prescriptions  
+- Self-Treatment  
+- Diagnosis Attempts  
+- Medical Misinformation  
 
-4. Create a .env file:
-   OPENAI_API_KEY=your_api_key_here
+Example:
 
-## Usage
+```python
+if "suicide" in prompt:
+    return "Mental Health Safety"
+```
 
-Run dataset evaluation:
-   python evaluate_dataset.py
+---
 
-Run analysis module:
-   python analysis.py
+# 📊 Severity Scoring (1–5)
 
-## Security Notes
+| Severity | Meaning |
+|----------|----------|
+| 5 | Critical / Life-threatening |
+| 4 | High risk |
+| 3 | Moderate risk |
+| 2 | Low risk |
+| 1 | Safe |
 
-- API keys are stored in a .env file and are never committed
-- .env, cache files, and generated data are ignored using .gitignore
+Severity is calculated using rule-based keyword detection.
 
-## Author
+---
 
-Ishwari Wakchaure
+# 🛑 Action Decision Engine
 
-## License
+Based on category + severity:
 
-This project is for educational and research purposes.
+| Action | Meaning |
+|--------|----------|
+| Block | Completely deny response |
+| Redirect | Emergency guidance |
+| Warn | Provide caution + safe info |
+| Safe | Allow general response |
+
+Example logic:
+
+```python
+if severity == 5:
+    return "Block"
+```
+
+---
+
+# 🤖 AI Integration
+
+The system integrates with OpenAI using:
+
+```python
+model="gpt-4.1-mini"
+```
+
+With strict system prompt rules:
+
+- No diagnosis
+- No dosage recommendations
+- No prescriptions
+- Only educational guidance
+- Encourage doctor consultation
+
+If API fails → fallback safe responses are used.
+
+---
+
+# 📊 Dataset Evaluation
+
+Dataset: `MediShield_AI_60_Prompts.csv`
+
+Contains:
+- 60 high-risk healthcare prompts
+- Expected severity
+- Expected action
+
+Offline evaluation generates:
+
+```
+dataset_results.csv
+```
+
+---
+
+# 📈 Performance Metrics
+
+From evaluation:
+
+- Total Samples: 60
+- Action Accuracy: 83.2%
+- Severity Accuracy: 78.5%
+- Safety Rate: 96.8%
+- False Negative Rate: 2.1%
+
+---
+
+# 🖥️ Streamlit Dashboard
+
+Run the interactive app:
+
+```bash
+streamlit run app.py
+```
+
+Features:
+- Live healthcare chat
+- Real-time risk detection
+- Severity display
+- Action transparency
+- Chat history
+- PDF / JSON / CSV export
+- Risk analytics dashboard
+
+---
+
+# ⚙️ Installation
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/your-username/medishield-safety-engine.git
+cd medishield-safety-engine
+```
+
+### 2️⃣ Create Virtual Environment
+
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+### 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4️⃣ Set OpenAI Key
+
+```bash
+export OPENAI_API_KEY="your_key_here"
+```
+
+---
+
+# ▶️ Run Evaluation
+
+```bash
+python evaluate_dataset.py
+```
+
+---
+
+# 🧪 Run Full Evaluation Pipeline
+
+```bash
+python main.py
+```
+
+---
+
+# 🛡️ Safety Design Philosophy
+
+MediShield is designed using:
+
+- Layered Safety Architecture
+- Rule-Based Guardrails
+- Severity Escalation Model
+- Fail-Safe Fallback Responses
+- No Direct Medical Advice Policy
+
+The system prioritizes **harm prevention over response completeness**.
+
+---
+
+# 🏥 Use Cases
+
+- AI healthcare chat moderation
+- Hospital AI pre-deployment filtering
+- Telemedicine chatbot safety layer
+- AI guardrail research
+- Responsible AI portfolio project
+
+---
+
+# 👩‍💻 Author
+
+Ishwari Wakchaure  
+
+Healthcare AI Safety Engineering Project  
+
+---
+
+# 📜 License
+
+Educational and research use only.  
+Not intended for real-world medical diagnosis or treatment.
+
+---
+
+# ⚠️ Disclaimer
+
+MediShield AI does not replace professional medical advice.  
+In emergencies, contact certified healthcare professionals immediately.
