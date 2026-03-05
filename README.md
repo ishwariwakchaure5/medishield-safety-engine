@@ -261,18 +261,6 @@ The system prioritizes **harm prevention over response completeness**.
 ---
 
 # 👩‍💻 Author
-
 Ishwari Wakchaure  
-
 Healthcare AI Safety Engineering Project  
-
----
-
-# 📜 License
-
-Educational and research use only.  
-Not intended for real-world medical diagnosis or treatment.
-
----
-
 
