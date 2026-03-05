@@ -275,7 +275,4 @@ Not intended for real-world medical diagnosis or treatment.
 
 ---
 
-# ⚠️ Disclaimer
 
-MediShield AI does not replace professional medical advice.  
-In emergencies, contact certified healthcare professionals immediately.
