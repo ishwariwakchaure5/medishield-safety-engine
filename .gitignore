@@ -13,7 +13,6 @@ venv/
 .venv/
 
 # Data / generated files
-dataset_results.csv
 
 # Logs
 *.log
